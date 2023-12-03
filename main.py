@@ -1,7 +1,30 @@
+def calculate_soh(present_capacity, rated_capacity=120):
+    """
+    Calculate State of Health (SoH) based on present and rated capacity.
+    """
+    soh = (present_capacity / rated_capacity) * 100
+    return soh
+
 
 def count_batteries_by_health(present_capacities):
+ 
+  healthy = 0
+  exchange = 0
+  failed = 0
+
+  for capacity in present_capacities:
+        soh = calculate_soh(capacity)
+        print(f"present capacity: {capacity},SoH:{soh}")
+
+        if soh > 100:
+            healthy += 1
+        elif 62.8 <= soh <= 67.5:
+            exchange += 1
+        elif soh < 62.8:
+            failed += 1
+    
   return {
-    "healthy": 0,
+    "healthy": healthy,
     "exchange": 0,
     "failed": 0
   }
